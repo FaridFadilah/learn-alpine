@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style></style>
+</head>
+
+<body>
+  <div x-data="{ 
+      count : 0,
+      data: [],
+      isShow: false,
+      name,
+      search: '',
+      get searchData(){
+        return this.data.filter(i => i.startsWith(this.search))
+      }
+    }">
+    <button x-on:click="count++">increment</button>
+    <span x-text="count"></span>
+    <button x-on:click="data.push(count++)">tambah data</button>
+    <div x-data="{ open: false }" class="">
+      <p x-text="open + 'hello world' + open"></p>
+    </div>
+    <input type="text" x-model="search">
+    <template x-for="data in searchData" :key="data">
+      <ul>
+        <li x-text="data"></li>
+      </ul>
+    </template>
+
+    <!-- name -->
+    <input type="text" x-model="name">
+    <p>Namaku adalah : <span x-text="name"></span></p>
+
+    <button x-on:click="isShow = !isShow" x-text=" isShow ? 'sembunyikan' : 'tampilkan' "></button>
+
+    <h1 x-bind:class=""></h1>
+    <p x-show="isShow">Surprise</p>
+
+    <input x-bind:type="isShow ? 'text' : 'password'">
+    <button x-on:click="isShow = !isShow" x-text="isShow ? 'hilangkan' : 'tampilkan'"></button>
+
+
+  </div>
+</body>
+
+</html>
