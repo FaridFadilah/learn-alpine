@@ -6,26 +6,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <style></style>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="script.js"></script>
+  <style>
+    .black {
+      background-color: black;
+      color: white;
+    }
+
+    .white {
+      background-color: white;
+      color: black;
+    }
+  </style>
 </head>
 
-<body>
-  <div x-data="{ 
-      count : 0,
-      data: ['farid', 'fadilah', 'permana'],
-      table: [
-      {nama: 'farid', gender: 'l', kategori_usia: 10},
-      {nama: 'fadilah', gender: 'l', kategori_usia: 13},
-      {nama: 'permana', gender: 'p', kategori_usia: 19}
-      ],
-      isShow: false,
-      name: 'farid',
-      search: '',
-      get searchData(){ 
-        return this.data.filter(i => i.startsWith(this.search))
-      }
-    }">
+<body x-bind:class="$store.action.on ? 'black' : 'white'">
+
+
+
+  <div x-data="name">
     <button x-on:click="count++">increment</button>
     <span x-text="count"></span>
     <button x-on:click="data.push(count++)">tambah data</button>
@@ -48,42 +48,78 @@
     <input x-bind:type="isShow ? 'text' : 'password'">
     <button x-on:click="isShow = !isShow" x-text="isShow ? 'hilangkan' : 'tampilkan'"></button>
 
-    <table>
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>gender</th>
-          <th>tanggal lahir</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template x-for="data in table">
+    <ul>
+      <!-- Fetching data api -->
+      <button x-on:click="fetchListUser()">tampilkan user</button>
+      <template x-for="item in users">
+        <ul>
+          <li x-text="item.name"></li>
+        </ul>
+      </template>
+
+      <table>
+        <thead>
           <tr>
-            <th x-text="data.nama"></th>
-            <template x-if="data.gender == 'l'">
-              <th>
-                laki-laki
-              </th>
-            </template>
-            <template x-if="data.gender == 'p'">
-              <th>
-                perempuan
-              </th>
-            </template>
-            <template x-if="data.kategori_usia <= 13">
-              <th>
-                Dibawah umur
-              </th>
-            </template>
-            <template x-if="data.kategori_usia > 13">
-              <th>
-                remaja
-              </th>
-            </template>
+            <th>name</th>
+            <th>gender</th>
+            <th>tanggal lahir</th>
           </tr>
-        </template>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <template x-for="data in table">
+            <tr>
+              <th x-text="data.nama"></th>
+              <template x-if="data.gender == 'l'">
+                <th>
+                  laki-laki
+                </th>
+              </template>
+              <template x-if="data.gender == 'p'">
+                <th>
+                  perempuan
+                </th>
+              </template>
+              <template x-if="data.kategori_usia <= 13">
+                <th>
+                  Dibawah umur
+                </th>
+              </template>
+              <template x-if="data.kategori_usia > 13">
+                <th>
+                  remaja
+                </th>
+              </template>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+      <div x-init="date = new Date()">
+        <div x-text="date"></div>
+      </div>
+      <div x-text="message">
+        <div x-init="message = 'JJJ'"></div>
+        <div x-text="message"></div>
+      </div>
+      <div x-effect="console.log('Count is ' + count)">
+        <div x-text="date"></div>
+      </div>
+      <!-- <input type="text" x-ref="content">
+    <button x-on:click="console.log($refs.content)">log</button>
+    <div x-text="content"></div> -->
+  </div>
+
+  <!-- <button @click="$store.notifications.notify('hello')">
+    click me
+  </button> -->
+  <div x-data="name">
+    <div x-text="firstName"></div>
+    <div x-text="lastName"></div>
+  </div>
+
+  <button @click="$store.action.toggle()">darkMode</button>
+
+  <div x-show="$store.action.on">
+    dark mode
   </div>
 </body>
 
