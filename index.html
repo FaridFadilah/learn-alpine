@@ -13,11 +13,16 @@
 <body>
   <div x-data="{ 
       count : 0,
-      data: [],
+      data: ['farid', 'fadilah', 'permana'],
+      table: [
+      {nama: 'farid', gender: 'l', kategori_usia: 10},
+      {nama: 'fadilah', gender: 'l', kategori_usia: 13},
+      {nama: 'permana', gender: 'p', kategori_usia: 19}
+      ],
       isShow: false,
-      name,
+      name: 'farid',
       search: '',
-      get searchData(){
+      get searchData(){ 
         return this.data.filter(i => i.startsWith(this.search))
       }
     }">
@@ -28,25 +33,57 @@
       <p x-text="open + 'hello world' + open"></p>
     </div>
     <input type="text" x-model="search">
-    <template x-for="data in searchData" :key="data">
-      <ul>
-        <li x-text="data"></li>
-      </ul>
-    </template>
 
-    <!-- name -->
+    <ul>
+      <template x-for="item in data">
+        <li x-text="item"></li>
+      </template>
+    </ul>
+
     <input type="text" x-model="name">
     <p>Namaku adalah : <span x-text="name"></span></p>
-
     <button x-on:click="isShow = !isShow" x-text=" isShow ? 'sembunyikan' : 'tampilkan' "></button>
-
-    <h1 x-bind:class=""></h1>
-    <p x-show="isShow">Surprise</p>
-
+    <h1 x-bind:class="name"></h1>
+    <p x-show="isShow" x-transition>Surprise</p>
     <input x-bind:type="isShow ? 'text' : 'password'">
     <button x-on:click="isShow = !isShow" x-text="isShow ? 'hilangkan' : 'tampilkan'"></button>
 
-
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>gender</th>
+          <th>tanggal lahir</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="data in table">
+          <tr>
+            <th x-text="data.nama"></th>
+            <template x-if="data.gender == 'l'">
+              <th>
+                laki-laki
+              </th>
+            </template>
+            <template x-if="data.gender == 'p'">
+              <th>
+                perempuan
+              </th>
+            </template>
+            <template x-if="data.kategori_usia <= 13">
+              <th>
+                Dibawah umur
+              </th>
+            </template>
+            <template x-if="data.kategori_usia > 13">
+              <th>
+                remaja
+              </th>
+            </template>
+          </tr>
+        </template>
+      </tbody>
+    </table>
   </div>
 </body>
 
