@@ -35,6 +35,15 @@ Alpine.data('name', () => ({
     },
     fetchLogin(){
       localStorage.setItem('email', this.email)
+    },
+    cobaFetch(){
+      fetch('https://jsonplaceholder.typicode.com/users', {
+        method : 'POST',
+        body: formData,
+        headers: {
+          authorization: 'value'
+        }
+      })
     }
   }),
 )
