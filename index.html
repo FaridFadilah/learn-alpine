@@ -50,11 +50,19 @@
 
     <ul>
       <!-- Fetching data api -->
+      <!-- <div x-init="fetchListUser()"></div> -->
       <button x-on:click="fetchListUser()">tampilkan user</button>
-      <template x-for="item in users">
-        <ul>
-          <li x-text="item.name"></li>
-        </ul>
+      <template x-if="isLoading">
+        <p>Sedang memuat ...</p>
+      </template>
+      <template x-if="!isLoading">
+        <template x-if="users.length != 0">
+          <ul>
+            <template x-for="(item, index) in users">
+              <li x-text="`${ index + 1 } . ${ item.name }`"></li>
+            </template>
+          </ul>
+        </template>
       </template>
 
       <table>

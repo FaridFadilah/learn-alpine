@@ -9,10 +9,13 @@ Alpine.data('name', () => ({
   firstName : 'farid',
   lastName : 'fadilah',
   users : [],
+  isLoading: false,
   fetchListUser(){
+    this.isLoading = true
     fetch('https://jsonplaceholder.typicode.com/users')
       .then(async (response) => {
         this.users  = await response.json()
+        this.isLoading = false
       }
     )
   },
@@ -29,6 +32,9 @@ Alpine.data('name', () => ({
     message : 'hallo',
     get searchData(){ 
       return this.data.filter(i => i.startsWith(this.search))
+    },
+    fetchLogin(){
+      localStorage.setItem('email', this.email)
     }
-  })
+  }),
 )
